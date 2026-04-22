@@ -7,6 +7,8 @@ public class InstanceEditorTool : EditorWindow
     int selectedPrefab = 0;
     Transform parentObject;
 
+    Vector2 scrollPos;
+
     GameObject lastInstance;
 
     [MenuItem("Tools/Instance Obj Tool")]
@@ -37,10 +39,16 @@ public class InstanceEditorTool : EditorWindow
             System.Array.Resize(ref prefabs, newSize);
         }
 
+        if(size > 10)
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(200));
+
         for (int i = 0; i < prefabs.Length; i++)
         {
             prefabs[i] = (GameObject)EditorGUILayout.ObjectField($"Prefab {i}", prefabs[i], typeof(GameObject), false);
         }
+
+        if(size > 10)
+            EditorGUILayout.EndScrollView();
 
         if (prefabs != null && prefabs.Length > 0)
         {
